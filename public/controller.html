@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pong Controller</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="controller-page">
+    <div class="controller-layout">
+      <header class="controller-header">
+        <div class="brand">PONG CONTROLLER</div>
+        <div id="connection" class="status">Connecting...</div>
+      </header>
+
+      <section class="card info-card">
+        <div class="label">Player ID</div>
+        <div id="player-id" class="mono">Pending</div>
+      </section>
+
+      <section class="card name-card">
+        <div class="label">Player name</div>
+        <div class="name-row">
+          <input id="player-name" class="text-input" type="text" maxlength="20" placeholder="Your name" />
+          <button id="save-name" class="primary">Save</button>
+        </div>
+        <div id="name-status" class="name-status">Set your name to join the queue.</div>
+      </section>
+
+      <section class="card queue-card">
+        <div class="label">Queue</div>
+        <div id="queue-status" class="queue-status">Not in queue</div>
+        <div class="button-row">
+          <button id="join-btn" class="primary">Join queue</button>
+          <button id="leave-btn" class="ghost" disabled>Leave queue</button>
+        </div>
+        <div id="queue-error" class="queue-error"></div>
+      </section>
+
+      <section class="card match-card" id="match-card">
+        <div class="label">Match</div>
+        <div id="side-label" class="side-label">Waiting for match...</div>
+        <div id="score-label" class="score-label">Score: 0 - 0</div>
+      </section>
+
+      <section class="controls">
+        <button id="up-btn" class="control-btn">UP</button>
+        <button id="down-btn" class="control-btn">DOWN</button>
+      </section>
+
+      <footer class="controller-footer">Keep this screen open while you play.</footer>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/controller.js"></script>
+  </body>
+</html>

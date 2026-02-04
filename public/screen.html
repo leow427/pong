@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pong Screen</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="screen-page">
+    <div class="screen-layout">
+      <header class="screen-header">
+        <div class="brand">PONG ARENA</div>
+        <div id="status" class="status">Waiting for players...</div>
+        <div class="scoreboard">
+          <div class="name-row">
+            <span id="left-name" class="player-name">Left Player</span>
+            <span id="right-name" class="player-name">Right Player</span>
+          </div>
+          <div class="score-row">
+            <span id="score-left">0</span>
+            <span class="score-divider">:</span>
+            <span id="score-right">0</span>
+          </div>
+        </div>
+      </header>
+      <main class="screen-main">
+        <div class="screen-canvas-wrap">
+          <canvas id="game" aria-label="Pong court"></canvas>
+        </div>
+        <aside class="screen-sidebar">
+          <div class="qr-card">
+            <div class="qr-title">Scan to join</div>
+            <img id="qr" src="/qr" alt="QR code to open the controller" />
+            <div id="qr-url" class="qr-url"></div>
+          </div>
+          <div id="match-info" class="match-info">No match running.</div>
+          <div class="demo-card">
+            <div class="qr-title">Demo mode</div>
+            <button id="demo-btn" class="primary">Start demo</button>
+            <div id="demo-status" class="demo-status">
+              Use W (up) and S (down) for Player 1, Arrow Up/Down for Player 2.
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/screen.js"></script>
+  </body>
+</html>
