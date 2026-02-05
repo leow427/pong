@@ -16,9 +16,11 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 const publicDir = path.join(__dirname, 'public');
+const srcDir = path.join(__dirname, 'src');
 
 // Serve static assets (screen/controller clients)
 app.use(express.static(publicDir));
+app.use('/src', express.static(srcDir));
 
 // Main routes
 app.get('/', (req, res) => res.redirect('/screen'));

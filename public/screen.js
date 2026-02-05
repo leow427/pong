@@ -1,3 +1,7 @@
+import GameEngine from '/src/engine/GameEngine.js';
+import CanvasRenderer from '/src/render/CanvasRenderer.js';
+import { createBroadcaster } from '/src/broadcast/browserBroadcaster.js';
+
 const socket = io();
 
 const statusEl = document.getElementById('status');
@@ -12,12 +16,38 @@ const demoStatusEl = document.getElementById('demo-status');
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-let currentState = null;
 const DEFAULT_WIDTH = 900;
 const DEFAULT_HEIGHT = 500;
+const DEFAULT_PADDLE_WIDTH = 12;
+const DEFAULT_PADDLE_HEIGHT = 90;
+const DEFAULT_PADDLE_INSET = 28;
+const DEFAULT_BALL_RADIUS = 8;
+
+const broadcastEnabled = new URLSearchParams(window.location.search).get('broadcast') === '1';
+
+const engine = new GameEngine({
+  width: DEFAULT_WIDTH,
+  height: DEFAULT_HEIGHT,
+  paddleWidth: DEFAULT_PADDLE_WIDTH,
+  paddleHeight: DEFAULT_PADDLE_HEIGHT,
+  paddleInset: DEFAULT_PADDLE_INSET,
+  ballRadius: DEFAULT_BALL_RADIUS,
+  broadcastEnabled
+});
+
+const renderer = new CanvasRenderer(canvas, ctx);
+const broadcaster = createBroadcaster({
+  enabled: broadcastEnabled,
+  url: 'ws://127.0.0.1:8081',
+  fps: 30
+});
+
 let demoActive = false;
 let leftMove = 0;
 let rightMove = 0;
+let latestServerState = null;
+let matchActive = false;
+let demoMatch = false;
 
 function setStatus(text) {
   statusEl.textContent = text;
@@ -60,49 +90,6 @@ function sizeCanvas(state) {
   canvas.style.height = `${state.height * scale}px`;
 }
 
-function drawField(state) {
-  ctx.clearRect(0, 0, state.width, state.height);
-  ctx.fillStyle = '#040b0f';
-  ctx.fillRect(0, 0, state.width, state.height);
-
-  ctx.strokeStyle = 'rgba(248, 250, 252, 0.18)';
-  ctx.setLineDash([10, 12]);
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(state.width / 2, 0);
-  ctx.lineTo(state.width / 2, state.height);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  ctx.fillStyle = '#f8fafc';
-  ctx.fillRect(state.paddleInset, state.leftPaddleY, state.paddleWidth, state.paddleHeight);
-  ctx.fillRect(
-    state.width - state.paddleInset - state.paddleWidth,
-    state.rightPaddleY,
-    state.paddleWidth,
-    state.paddleHeight
-  );
-
-  ctx.fillStyle = '#fbbf24';
-  ctx.beginPath();
-  ctx.arc(state.ballX, state.ballY, state.ballRadius, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function render() {
-  if (currentState) {
-    drawField(currentState);
-  } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#040b0f';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'rgba(248, 250, 252, 0.6)';
-    ctx.font = '24px Impact, sans-serif';
-    ctx.fillText('Waiting for players...', 24, 40);
-  }
-  requestAnimationFrame(render);
-}
-
 socket.on('connect', () => {
   socket.emit('register_screen');
 });
@@ -112,9 +99,20 @@ socket.on('screen_registered', () => {
 });
 
 socket.on('match_start', (payload) => {
-  currentState = payload.state;
-  sizeCanvas(currentState);
-  updateScores(currentState.leftScore, currentState.rightScore);
+  latestServerState = payload.state;
+  matchActive = true;
+  demoMatch = Boolean(payload.isDemo);
+
+  engine.update(0, {
+    serverState: latestServerState,
+    matchActive,
+    isDemo: demoMatch,
+    broadcastEnabled
+  });
+
+  sizeCanvas(engine.getState());
+  updateScores(payload.state.leftScore, payload.state.rightScore);
+
   if (payload.isDemo) {
     setStatus('Demo match running');
     setMatchInfo('Demo match in progress.');
@@ -130,7 +128,7 @@ socket.on('match_start', (payload) => {
 });
 
 socket.on('match_state', (state) => {
-  currentState = state;
+  latestServerState = state;
   updateScores(state.leftScore, state.rightScore);
 });
 
@@ -139,7 +137,10 @@ socket.on('match_end', (payload) => {
   const statusText = winner ? `${winner} has won!` : 'Match ended';
   setStatus(statusText);
   setMatchInfo('Waiting for next match...');
-  currentState = null;
+  latestServerState = null;
+  matchActive = false;
+  demoMatch = false;
+  engine.reset();
   updateScores(0, 0);
   updateNames('Left Player', 'Right Player');
   if (payload.isDemo) {
@@ -155,7 +156,7 @@ socket.on('demo_error', (payload) => {
 });
 
 window.addEventListener('resize', () => {
-  if (currentState) sizeCanvas(currentState);
+  if (matchActive) sizeCanvas(engine.getState());
 });
 
 function emitDemoMove(side, move) {
@@ -175,7 +176,7 @@ function setDemoMove(side, move) {
 }
 
 function requestDemoStart() {
-  if (currentState) {
+  if (matchActive) {
     setDemoStatus('Finish the current match before starting a demo.');
     return;
   }
@@ -238,8 +239,28 @@ window.addEventListener('keyup', (event) => {
   }
 });
 
+function render(now) {
+  const dt = (now - render.lastTime) / 1000;
+  render.lastTime = now;
+
+  engine.update(dt, {
+    serverState: latestServerState,
+    matchActive,
+    isDemo: demoMatch,
+    broadcastEnabled
+  });
+
+  const state = engine.getState();
+  renderer.render(state);
+  broadcaster.capture(state);
+
+  requestAnimationFrame(render);
+}
+
+render.lastTime = performance.now();
+
 qrUrlEl.textContent = `${window.location.origin}/controller`;
 
 sizeCanvas({ width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT });
 updateNames('Left Player', 'Right Player');
-render();
+requestAnimationFrame(render);
