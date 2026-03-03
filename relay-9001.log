@@ -1,0 +1,126 @@
+TD relay listening on ws://127.0.0.1:8081
+Forwarding OSC to udp://127.0.0.1:9001
+summary: frames=0 (no state yet)
+summary: frames=0 (no state yet)
+summary: frames=0 (no state yet)
+summary: frames=0 (no state yet)
+summary: frames=0 (no state yet)
+summary: frames=0 (no state yet)
+client connected
+client disconnected
+summary: frames=1 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+summary: frames=0 ball=(0.500, 0.400) paddles=(0.200, 0.800) score=(1, 2) demo=0 status=playing
+client connected
+summary: frames=4 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=1 status=demo
+summary: frames=61 ball=(0.156, 0.526) paddles=(0.410, 0.410) score=(0, 0) demo=1 status=demo
+summary: frames=61 ball=(0.900, 0.656) paddles=(0.410, 0.410) score=(0, 0) demo=1 status=demo
+summary: frames=61 ball=(0.779, 0.541) paddles=(0.410, 0.410) score=(1, 0) demo=1 status=demo
+summary: frames=61 ball=(0.539, 0.689) paddles=(0.410, 0.410) score=(1, 0) demo=1 status=demo
+summary: frames=61 ball=(0.000, 0.281) paddles=(0.410, 0.410) score=(1, 0) demo=1 status=demo
+summary: frames=61 ball=(0.133, 0.712) paddles=(0.410, 0.410) score=(1, 1) demo=1 status=demo
+summary: frames=60 ball=(0.272, 0.565) paddles=(0.410, 0.410) score=(1, 2) demo=1 status=demo
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.604, 0.564) paddles=(0.449, 0.410) score=(0, 0) demo=1 status=demo
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(1, 0) demo=1 status=demo
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(2, 0) demo=1 status=demo
+summary: frames=61 ball=(0.876, 0.638) paddles=(0.410, 0.410) score=(2, 0) demo=1 status=demo
+summary: frames=61 ball=(0.257, 0.581) paddles=(0.410, 0.410) score=(2, 0) demo=1 status=demo
+summary: frames=60 ball=(0.417, 0.515) paddles=(0.410, 0.410) score=(2, 1) demo=1 status=demo
+summary: frames=61 ball=(0.256, 0.855) paddles=(0.410, 0.410) score=(2, 1) demo=1 status=demo
+summary: frames=61 ball=(0.670, 0.264) paddles=(0.410, 0.410) score=(2, 1) demo=1 status=demo
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=60 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover
+summary: frames=61 ball=(0.500, 0.500) paddles=(0.410, 0.410) score=(0, 0) demo=0 status=gameover

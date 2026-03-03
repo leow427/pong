@@ -30,8 +30,7 @@ app.get('/controller', (req, res) => res.sendFile(path.join(publicDir, 'controll
 // QR endpoint for controller join URL
 app.get('/qr', async (req, res) => {
   try {
-    const baseUrl = `${req.protocol}://${req.headers.host}`;
-    const joinUrl = `${baseUrl}/controller`;
+    const joinUrl = 'https://ebullient-lecia-handleless.ngrok-free.dev/controller';
     const png = await qrcode.toBuffer(joinUrl, { type: 'png', width: 260, margin: 1 });
     res.setHeader('Content-Type', 'image/png');
     res.send(png);
@@ -53,7 +52,8 @@ const GAME = {
   ballSpeedIncrement: 14,
   ballMaxSpeed: 620,
   winScore: 3,
-  serveDelayMs: 900
+  serveDelayMs: 900,
+  matchStartDelayMs: 4000
 };
 
 // Runtime state
@@ -127,13 +127,13 @@ function removeFromQueue(playerId, notify = true) {
 }
 
 // Place ball at center and delay serve for a brief pause
-function scheduleServe(match, direction) {
+function scheduleServe(match, direction, delayMs = GAME.serveDelayMs) {
   match.state.ballX = GAME.width / 2;
   match.state.ballY = GAME.height / 2;
   match.state.ballVX = 0;
   match.state.ballVY = 0;
   match.pendingServeDirection = direction;
-  match.pausedUntil = Date.now() + GAME.serveDelayMs;
+  match.pausedUntil = Date.now() + delayMs;
 }
 
 // Apply initial ball velocity when a serve begins
@@ -147,10 +147,10 @@ function startServe(match) {
 }
 
 // Reset paddles + schedule a new serve after a point
-function resetMatchPositions(match, serveDirection) {
+function resetMatchPositions(match, serveDirection, delayMs = GAME.serveDelayMs) {
   match.state.leftPaddleY = (GAME.height - GAME.paddleHeight) / 2;
   match.state.rightPaddleY = (GAME.height - GAME.paddleHeight) / 2;
-  scheduleServe(match, serveDirection);
+  scheduleServe(match, serveDirection, delayMs);
 }
 
 // Create a match and assign it to a screen
@@ -160,8 +160,8 @@ function createMatch(screen, leftPlayerId, rightPlayerId, options = {}) {
   const matchId = makeId();
   const leftPlayer = players.get(leftPlayerId);
   const rightPlayer = players.get(rightPlayerId);
-  const leftName = leftPlayer ? leftPlayer.name : 'Left Player';
-  const rightName = rightPlayer ? rightPlayer.name : 'Right Player';
+  const leftName = options.isDemo ? 'Demo Player 1' : 'Player 1';
+  const rightName = options.isDemo ? 'Demo Player 2' : 'Player 2';
   const match = {
     id: matchId,
     screenId: screen.id,
@@ -203,7 +203,7 @@ function createMatch(screen, leftPlayerId, rightPlayerId, options = {}) {
   if (rightPlayer) rightPlayer.matchId = matchId;
 
   // Start with a fresh serve
-  resetMatchPositions(match, Math.random() < 0.5 ? -1 : 1);
+  resetMatchPositions(match, Math.random() < 0.5 ? -1 : 1, match.isDemo ? GAME.serveDelayMs : GAME.matchStartDelayMs);
 
   const screenSocket = getSocket(screen.socketId);
   if (screenSocket) {
@@ -287,8 +287,11 @@ function endMatch(matchId, reason, winnerId) {
   if (match.interval) clearInterval(match.interval);
   matches.delete(matchId);
 
-  const winnerPlayer = winnerId ? players.get(winnerId) : null;
-  const winnerName = winnerPlayer ? winnerPlayer.name : null;
+  const winnerName = winnerId === match.leftPlayerId
+    ? match.leftName
+    : winnerId === match.rightPlayerId
+      ? match.rightName
+      : null;
 
   const screen = screens.get(match.screenSocketId);
   if (screen) {
@@ -486,43 +489,32 @@ io.on('connection', (socket) => {
   // Controller registration (restore or create player ID)
   socket.on('register_controller', (payload = {}) => {
     const requestedId = typeof payload.playerId === 'string' ? payload.playerId : null;
-    const incomingName = sanitizeName(payload.name, null);
     let player = requestedId ? players.get(requestedId) : null;
 
     if (!player) {
       const newId = makeId();
-      const defaultName = `Player ${newId.slice(0, 4)}`;
       player = {
         id: newId,
         socketId: socket.id,
         inQueue: false,
         matchId: null,
-        name: incomingName || defaultName
+        name: 'Player'
       };
       players.set(newId, player);
     } else {
       player.socketId = socket.id;
-      if (incomingName) player.name = incomingName;
     }
 
     socket.data.role = 'controller';
     socket.data.playerId = player.id;
 
-    socket.emit('player_registered', { playerId: player.id, name: player.name });
+    socket.emit('player_registered', { playerId: player.id });
 
     if (player.inQueue) {
       updateQueuePositions();
     }
   });
 
-  socket.on('set_player_name', (payload = {}) => {
-    const playerId = socket.data.playerId;
-    if (!playerId) return;
-    const player = players.get(playerId);
-    if (!player) return;
-    player.name = sanitizeName(payload.name, player.name);
-    socket.emit('player_name_updated', { name: player.name });
-  });
 
   // Join matchmaking queue
   socket.on('join_queue', () => {

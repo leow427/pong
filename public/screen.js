@@ -23,7 +23,7 @@ const DEFAULT_PADDLE_HEIGHT = 90;
 const DEFAULT_PADDLE_INSET = 28;
 const DEFAULT_BALL_RADIUS = 8;
 
-const broadcastEnabled = new URLSearchParams(window.location.search).get('broadcast') === '1';
+const broadcastEnabled = true;
 
 const engine = new GameEngine({
   width: DEFAULT_WIDTH,
@@ -259,7 +259,7 @@ function render(now) {
 
 render.lastTime = performance.now();
 
-qrUrlEl.textContent = `${window.location.origin}/controller`;
+qrUrlEl.textContent = 'https://ebullient-lecia-handleless.ngrok-free.dev/controller';
 
 sizeCanvas({ width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT });
 updateNames('Left Player', 'Right Player');
