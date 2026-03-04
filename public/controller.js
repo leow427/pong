@@ -9,12 +9,17 @@ const sideLabelEl = document.getElementById('side-label');
 const scoreLabelEl = document.getElementById('score-label');
 const upBtn = document.getElementById('up-btn');
 const downBtn = document.getElementById('down-btn');
+const readyOverlayEl = document.getElementById('ready-overlay');
+const readyOverlayMessageEl = document.getElementById('ready-overlay-message');
+
+const READY_OVERLAY_MS = 2200;
 
 let playerId = localStorage.getItem('pongPlayerId');
 let inQueue = false;
 let inMatch = false;
 let currentMove = 0;
 let side = null;
+let readyOverlayTimer = null;
 
 function setConnection(text) {
   connectionEl.textContent = text;
@@ -30,6 +35,27 @@ function setScore(left, right) {
 
 function getPlayerLabel(matchSide) {
   return matchSide === 'left' ? 'Player 1' : 'Player 2';
+}
+
+function getQueueLabel(position) {
+  return `You are #${position} in queue`;
+}
+
+function hideReadyOverlay() {
+  if (!readyOverlayEl) return;
+  readyOverlayEl.classList.remove('active');
+}
+
+function showReadyOverlay(matchSide) {
+  if (!readyOverlayEl || !readyOverlayMessageEl) return;
+  const playerLabel = getPlayerLabel(matchSide);
+  readyOverlayMessageEl.textContent = `Get Ready! You are ${playerLabel}!`;
+  readyOverlayEl.classList.add('active');
+  if (readyOverlayTimer) clearTimeout(readyOverlayTimer);
+  readyOverlayTimer = setTimeout(() => {
+    hideReadyOverlay();
+    readyOverlayTimer = null;
+  }, READY_OVERLAY_MS);
 }
 
 function setMove(direction) {
@@ -49,6 +75,7 @@ function resetMatchUI(message) {
   inMatch = false;
   side = null;
   currentMove = 0;
+  hideReadyOverlay();
   updateControlState();
   sideLabelEl.textContent = message || 'Waiting for match...';
   if (!message) setScore(0, 0);
@@ -66,6 +93,7 @@ socket.on('connect', () => {
 
 socket.on('disconnect', () => {
   setConnection('Disconnected');
+  hideReadyOverlay();
 });
 
 socket.on('player_registered', (payload) => {
@@ -77,10 +105,11 @@ socket.on('player_registered', (payload) => {
 socket.on('queue_update', (payload) => {
   inQueue = true;
   queueErrorEl.textContent = '';
+  const queueLabel = getQueueLabel(payload.position);
   if (payload.waitingForOpponent) {
-    setQueueStatus('Waiting for opponent');
+    setQueueStatus(`${queueLabel}. Waiting for opponent.`);
   } else {
-    setQueueStatus(`Position ${payload.position} of ${payload.total}`);
+    setQueueStatus(`${queueLabel} of ${payload.total}.`);
   }
   updateQueueButtons();
 });
@@ -97,6 +126,7 @@ socket.on('match_start', (payload) => {
   setQueueStatus('Game starts when the ball starts moving.');
   sideLabelEl.textContent = `You are ${getPlayerLabel(side)}.`;
   setScore(payload.scores.left, payload.scores.right);
+  showReadyOverlay(side);
   updateQueueButtons();
 });
 
@@ -114,6 +144,7 @@ socket.on('match_end', (payload) => {
 
 socket.on('queue_left', () => {
   inQueue = false;
+  hideReadyOverlay();
   setQueueStatus('Not in queue');
   updateQueueButtons();
 });
@@ -125,6 +156,7 @@ joinBtn.addEventListener('click', () => {
 leaveBtn.addEventListener('click', () => {
   socket.emit('leave_queue');
   inQueue = false;
+  hideReadyOverlay();
   setQueueStatus('Not in queue');
   updateQueueButtons();
 });
