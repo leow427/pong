@@ -413,10 +413,17 @@ button:active {
   text-align: center;
 }
 
-.ready-overlay-message {
+.ready-overlay-title {
   font-family: var(--font-display);
   font-size: clamp(28px, 7vw, 42px);
   line-height: 1.05;
   letter-spacing: 1px;
   color: var(--ink);
+}
+
+.ready-overlay-subtext {
+  margin-top: 10px;
+  font-size: clamp(16px, 4.2vw, 22px);
+  line-height: 1.2;
+  color: var(--accent-bright);
 }

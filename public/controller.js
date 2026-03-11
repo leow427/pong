@@ -10,9 +10,11 @@ const scoreLabelEl = document.getElementById('score-label');
 const upBtn = document.getElementById('up-btn');
 const downBtn = document.getElementById('down-btn');
 const readyOverlayEl = document.getElementById('ready-overlay');
-const readyOverlayMessageEl = document.getElementById('ready-overlay-message');
+const readyOverlayTitleEl = document.getElementById('ready-overlay-title');
+const readyOverlaySubtextEl = document.getElementById('ready-overlay-subtext');
 
-const READY_OVERLAY_MS = 2200;
+const START_OVERLAY_MS = 2200;
+const RESULT_OVERLAY_MS = 3200;
 
 let playerId = localStorage.getItem('pongPlayerId');
 let inQueue = false;
@@ -46,16 +48,30 @@ function hideReadyOverlay() {
   readyOverlayEl.classList.remove('active');
 }
 
-function showReadyOverlay(matchSide) {
-  if (!readyOverlayEl || !readyOverlayMessageEl) return;
-  const playerLabel = getPlayerLabel(matchSide);
-  readyOverlayMessageEl.textContent = `Get Ready! You are ${playerLabel}!`;
+function showOverlay(title, subtext, durationMs) {
+  if (!readyOverlayEl || !readyOverlayTitleEl || !readyOverlaySubtextEl) return;
+  readyOverlayTitleEl.textContent = title;
+  readyOverlaySubtextEl.textContent = subtext || '';
+  readyOverlaySubtextEl.style.display = subtext ? 'block' : 'none';
   readyOverlayEl.classList.add('active');
   if (readyOverlayTimer) clearTimeout(readyOverlayTimer);
   readyOverlayTimer = setTimeout(() => {
     hideReadyOverlay();
     readyOverlayTimer = null;
-  }, READY_OVERLAY_MS);
+  }, durationMs);
+}
+
+function showMatchStartOverlay(matchSide) {
+  const playerLabel = getPlayerLabel(matchSide);
+  showOverlay('Best of 3', `Get Ready! You are ${playerLabel}!`, START_OVERLAY_MS);
+}
+
+function showMatchEndOverlay(payload) {
+  const leftScore = payload?.scores?.left ?? 0;
+  const rightScore = payload?.scores?.right ?? 0;
+  const won = Boolean(payload.winnerId && payload.winnerId === playerId);
+  const headline = payload.winnerId ? (won ? 'You Won!' : 'You Lost') : 'Match Over';
+  showOverlay(headline, `Final Score: ${leftScore} - ${rightScore}`, RESULT_OVERLAY_MS);
 }
 
 function setMove(direction) {
@@ -126,7 +142,7 @@ socket.on('match_start', (payload) => {
   setQueueStatus('Game starts when the ball starts moving.');
   sideLabelEl.textContent = `You are ${getPlayerLabel(side)}.`;
   setScore(payload.scores.left, payload.scores.right);
-  showReadyOverlay(side);
+  showMatchStartOverlay(side);
   updateQueueButtons();
 });
 
@@ -138,6 +154,7 @@ socket.on('match_end', (payload) => {
   const winner = payload.winnerName || payload.winnerId || 'No winner';
   setScore(payload.scores.left, payload.scores.right);
   resetMatchUI(`${winner} has won!`);
+  showMatchEndOverlay(payload);
   setQueueStatus('Not in queue');
   updateQueueButtons();
 });
