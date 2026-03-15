@@ -30,7 +30,7 @@ app.get('/controller', (req, res) => res.sendFile(path.join(publicDir, 'controll
 // QR endpoint for controller join URL
 app.get('/qr', async (req, res) => {
   try {
-    const joinUrl = 'https://ebullient-lecia-handleless.ngrok-free.dev/controller';
+    const joinUrl = 'https://laser.ngrok.app/controller';
     const png = await qrcode.toBuffer(joinUrl, { type: 'png', width: 260, margin: 1 });
     res.setHeader('Content-Type', 'image/png');
     res.send(png);

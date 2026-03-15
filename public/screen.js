@@ -259,7 +259,7 @@ function render(now) {
 
 render.lastTime = performance.now();
 
-qrUrlEl.textContent = 'https://ebullient-lecia-handleless.ngrok-free.dev/controller';
+qrUrlEl.textContent = 'https://laser.ngrok.app/controller';
 
 sizeCanvas({ width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT });
 updateNames('Left Player', 'Right Player');
